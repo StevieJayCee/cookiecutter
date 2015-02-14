@@ -1,52 +1,282 @@
 @(twillioAuthToken: String)
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello Client Monkey 1</title>
-        <script type="text/javascript"
-        src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
-        <script type="text/javascript"
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-    </script>
-        <link href="//static0.twilio.com/packages/quickstart/client.css"
-        type="text/css" rel="stylesheet" />
-        <script type="text/javascript">
 
-        /* Create the Client with a Capability Token */
-        Twilio.Device.setup("@twillioAuthToken", {debug: true});
+@main("Welcome to Anytime Banking") {
+    <style>
+    * {
+    box-sizing: border-box;
+    }
+    .header-panel {
+    background-color: #009587;
+    height: 144px;
+    position: relative;
+    z-index: 3;
+    }
+    .header-panel div {
+    position: relative;
+    height: 100%;
+    }
+    .header-panel h1 {
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 10px;
+    padding-left: 35px;
+    }
 
-        Twilio.Device.ready(function (device) {
+    .menu {
+    overflow: auto;
+    padding: 0;
+    }
+    .menu, .menu * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    }
+    .menu ul {
+    padding: 0;
+    margin: 7px 0;
+    }
+    .menu ul li {
+    list-style: none;
+    padding: 20px 0 20px 50px;
+    font-size: 15px;
+    font-weight: normal;
+    cursor: pointer;
+    }
+    .menu ul li.active {
+    background-color: #dedede;
+    position: relative;
+    }
+    .menu ul li a {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+    }
+
+    .pages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    padding: 0;
+    overflow: auto;
+    }
+    .pages > div {
+    padding: 0 5px;
+    padding-top: 64px;
+    }
+
+    .pages .header {
+    color: rgb(82, 101, 162);
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 5px;
+    margin-bottom: 60px;
+    letter-spacing: 1.20000004768372px;
+    }
+
+    .page {
+    transform: translateY(1080px);
+    transition: transform 0 linear;
+    display: none;
+    opacity: 0;
+    font-size: 16px;
+    }
+
+    .page.active {
+    transform: translateY(0px);
+    transition: all 0.3s ease-out;
+    display: block;
+    opacity: 1;
+    }
+
+    #opensource {
+    color: rgba(0, 0, 0, 0.62);
+    position: fixed;
+    margin-top: 50px;
+    margin-left: 50px;
+    z-index: 100;
+    }
+
+    #source-modal h4 {
+    color: black;
+    }
+    </style>
+    <script type="text/javascript"
+    src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
+    <script type="text/javascript">
+
+    /* Create the Client with a Capability Token */
+    /* Create the Client with a Capability Token */
+    Twilio.Device.setup("@twillioAuthToken", {debug: true});
+
+    Twilio.Device.ready(function (device) {
         $("#log").text("Client '${clientName}' is ready");
-        });
+    });
 
-        /* Report any errors on the screen */
-        Twilio.Device.error(function (error) {
-        $("#log").text("Error: " + error.message);
-        });
+    /* Report any errors on the screen */
+    Twilio.Device.error(function (error) {
+    $("#log").text("Error: " + error.message);
+    });
 
-        Twilio.Device.connect(function (conn) {
-        $("#log").text("Successfully established call");
-        });
+    Twilio.Device.connect(function (conn) {
+    $("#log").text("Successfully established call");
+    });
 
 
-        Twilio.Device.incoming(function (conn) {
-        $("#log").text("Incoming connection from " + conn.parameters.From);
-        // accept the incoming connection and start two-way audio
-        conn.accept();
-        });
+    Twilio.Device.incoming(function (conn) {
+        document.getElementById("callAlert" ).style.display = "block";
+        $("#callAlert").html("Incoming call");
+        setInterval(function(){
+            conn.accept();
+            $("#callAlert").html("Call answered");
+        }, 5000);
+    });
+    </script>
+    <div class="row">
+        <nav class="col-xs-2 menu" style="height: 200px;">
+            <ul>
+                <li class="withripple active" onclick="showAccountInfo()">Account Info</li>
+                <li class="withripple" onclick="showRecentTransactions()">Recent Payments</li>
+                <li class="withripple" data-target="#material-colors">Recent Activity</li>
+            </ul>
+        </nav>
+        <div class="col-lg-9">
+            <div class="well bs-component">
+                <form class="form-horizontal" id="accountInfo">
+                    <fieldset>
 
-        /* Connect to Twilio when we call this function. */
-        function call() {
-        Twilio.Device.connect();
-        }
-        </script>
-    </head>
-    <body>
+                        <legend>Account Info</legend>
 
-        <button class="call" onclick="call();">
-      Call
-        </button>
+                        <div class="form-group">
+                            <label for="username" class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-10">
+                                <label class="form-control" id="username">Mary Kelly</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
+                            <div class="col-lg-10">
+                                <label class="form-control" id="accountType">IBAC</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
+                            <div class="col-lg-10">
+                                <label class="form-control" id="accountType">10297013</label>
+                            </div>
+                        </div>
 
-        <div id="log">Loading pigeons...</div>
-    </body>
-</html>
+                    </fieldset>
+                </form>
+                <div id="recentTransactions"  style="display: none;">
+                    <legend>Recent Transactions</legend>
+
+                    <div class="well bs-component">
+                        <form class="form-horizontal">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-lg-2 control-label">Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="username">Direct Debit</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">IBAC</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">10297013</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="well bs-component">
+
+                        <form class="form-horizontal">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-lg-2 control-label">Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="username">Direct Debit</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">IBAC</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">10297013</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="well bs-component">
+
+                        <form class="form-horizontal">
+                            <fieldset>
+
+                                <legend>Recent Transactions</legend>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-lg-2 control-label">Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="username">Direct Debit</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">IBAC</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
+                                    <div class="col-lg-10">
+                                        <label class="form-control" id="accountType">10297013</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="callAlert" class="alert alert-dismissable alert-success" style="position: fixed;
+            bottom: 0px;
+            width: 75%;
+            display:none;">
+                Incoming call
+            </div>
+        </div>
+
+        <div class="col-lg-3">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">&nbsp;</div>
+        <div class="col-lg-2">
+        </div>
+    </div>
+    <script>
+    function showAccountInfo() {
+        document.getElementById("accountInfo" ).style.display = "block";
+        document.getElementById("recentTransactions" ).style.display = "none";
+    }
+    function showRecentTransactions() {
+        document.getElementById("accountInfo" ).style.display = "none";
+        document.getElementById("recentTransactions" ).style.display = "block";
+    }
+    </script>
+}
