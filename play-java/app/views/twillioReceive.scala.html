@@ -151,19 +151,19 @@
                         <div class="form-group">
                             <label for="username" class="col-lg-2 control-label">Name</label>
                             <div class="col-lg-10">
-                                <label class="form-control" id="username">Mary Kelly</label>
+                                <label class="form-control" id="username"></label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
                             <div class="col-lg-10">
-                                <label class="form-control" id="accountType">IBAC</label>
+                                <label class="form-control" id="accountType"></label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
                             <div class="col-lg-10">
-                                <label class="form-control" id="accountType">10297013</label>
+                                <label class="form-control" id="accountNumber"></label>
                             </div>
                         </div>
 
@@ -172,85 +172,6 @@
                 <div id="recentTransactions"  style="display: none;">
                     <legend>Recent Transactions</legend>
 
-                    <div class="well bs-component">
-                        <form class="form-horizontal">
-                            <fieldset>
-
-                                <div class="form-group">
-                                    <label for="username" class="col-lg-2 control-label">Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="username">Direct Debit</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">IBAC</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">10297013</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="well bs-component">
-
-                        <form class="form-horizontal">
-                            <fieldset>
-
-                                <div class="form-group">
-                                    <label for="username" class="col-lg-2 control-label">Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="username">Direct Debit</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">IBAC</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">10297013</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="well bs-component">
-
-                        <form class="form-horizontal">
-                            <fieldset>
-
-                                <legend>Recent Transactions</legend>
-
-                                <div class="form-group">
-                                    <label for="username" class="col-lg-2 control-label">Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="username">Direct Debit</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Type</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">IBAC</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Account Number</label>
-                                    <div class="col-lg-10">
-                                        <label class="form-control" id="accountType">10297013</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
                 </div>
             </div>
 
@@ -270,6 +191,56 @@
         </div>
     </div>
     <script>
+
+    openBankUlsterDomain = 'https://ulsterbank.openbankproject.com/';
+    apiVer = 'obp/v1.2.1/';
+    accountsResource = 'banks/ulster-ni/accounts/';
+    account = 'current8/'
+    transactions = 'owner/transactions'
+
+    apiOwnerTransactions = openBankUlsterDomain + apiVer + accountsResource +
+      account + transactions;
+
+    $(function() {
+
+      $.getJSON( apiOwnerTransactions, function( data ) {
+        var items = [];
+        var txns = data['transactions'];
+        var account = txns[0]['this_account'];
+
+        $('#username').text(account['holders'][0]['name']);
+        $('#accountType').text(account['kind']);
+        $('#accountNumber').text(account['number']);
+
+        var i = 0
+        var txnDetails = null;
+        var merchant = null;
+        $.each( txns, function( key, val ) {
+          txnDetails = val['details'];
+          merchant = val['other_account']['holder']['name'];
+
+          $('#recentTransactions').append(
+
+            '<div class="well bs-component"><form class="form-horizontal"><fieldset>'+
+
+            '<div class="form-group"><label for="rTxnMerchant'+ i +
+            '" class="col-lg-2 control-label">Merchant</label><div class="col-lg-10"><label class="form-control" id="rTxnMerchant'+ i +
+            '">'+merchant+'</label></div></div><div class="form-group"><label for="rTxnType' + i +
+            '" class="col-lg-2 control-label">Transaction Type</label><div class="col-lg-10"><label class="form-control" id="rTxnType' + i +
+            '">'+txnDetails['type']+'</label></div></div><div class="form-group"><label for="rTxnAmount' + i +
+            '" class="col-lg-2 control-label">Amount</label><div class="col-lg-10"><label class="form-control" id="rTxnAmount' + i +
+            '">'+Math.abs(txnDetails['value']['amount'])+'</label></div></div>'+
+
+            '</fieldset></form></div>'
+          );
+          i++;
+        });
+        $( "<ul/>", {
+          "class": "my-new-list",
+          html: items.join( "" )
+        }).appendTo( "body" );
+      });
+    });
     function showAccountInfo() {
         document.getElementById("accountInfo" ).style.display = "block";
         document.getElementById("recentTransactions" ).style.display = "none";
