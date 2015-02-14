@@ -1,0 +1,42 @@
+@(message: String)
+
+@main("Login to Anytime Banking") {
+
+    <div class="row">
+        <div class="col-lg-3">&nbsp;</div>
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Login</legend>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="focusedInput" placeholder="Email" type="text" value="glenn@@example.com">
+                                    <span class="material-input">
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="password">
+                            </div>
+                        </div>
+                        <a style="float:right; background-color: #002A66" href="@routes.Application.index()" class="btn btn-info btn-raised">
+                            Login <div class="ripple-wrapper"></div>
+                        </a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-3">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">&nbsp;</div>
+        <div class="col-lg-2">
+            <a href="javascript:void(0)" class="btn btn-danger btn-fab btn-raised mdi-action-settings-phone"><div class="ripple-wrapper"></div></a>
+        </div>
+    </div>
+}
