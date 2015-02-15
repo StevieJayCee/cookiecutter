@@ -101,6 +101,35 @@
     #source-modal h4 {
     color: black;
     }
+    .arrow_box {
+    position: relative;
+    background: ##fff;
+    border: 0px solid #002A66;
+    margin-top: 1em;
+    }
+    .arrow_box:after, .arrow_box:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    }
+
+    .arrow_box:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: ##fff;
+    border-width: 10px;
+    margin-left: -10px;
+    }
+    .arrow_box:before {
+    border-color: rgba(0, 42, 102, 0);
+    border-bottom-color: #002A66;
+    border-width: 11px;
+    margin-left: -11px;
+    }
     </style>
     <script type="text/javascript"
     src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
@@ -123,12 +152,17 @@
     $("#log").text("Successfully established call");
     });
 
+    Twilio.Device.disconnect(function (conn) {
+      // Called for all new connections
+      callWaiting();
+    });
 
     Twilio.Device.incoming(function (conn) {
         document.getElementById("callAlert" ).style.display = "block";
         $("#callAlert").html("Incoming call");
         setInterval(function(){
             conn.accept();
+            showPayments();
             $("#callAlert").html("Call answered");
         }, 5000);
     });
@@ -136,14 +170,20 @@
     <div class="row">
         <nav class="col-xs-2 menu" style="height: 200px;">
             <ul>
-                <li class="withripple active" onclick="showAccountInfo()">Account Info</li>
-                <li class="withripple" onclick="showRecentTransactions()">Recent Transactions</li>
-                <li class="withripple" data-target="#material-colors">Recent Activity</li>
+                <li class="withripple" id="accountInfoTab" onclick="showAccountInfo()">Account Info</li>
+                <!-- <li class="withripple" id="paymentsTab" onclick="showPayments()">Payments</li> -->
+                <li class="withripple" id="transactionsTab" onclick="showTransactions()">Transactions</li>
             </ul>
         </nav>
         <div class="col-lg-9">
             <div class="well bs-component">
-                <form class="form-horizontal" id="accountInfo">
+
+              <form class="form-horizontal" id="idle">
+                <fieldset>
+                  <h1>Waiting on a call.....</h1>
+                </fieldset>
+              </form>
+                <form class="form-horizontal" id="accountInfo" style="display: none;">
                     <fieldset>
 
                         <legend>Account Info</legend>
@@ -169,8 +209,58 @@
 
                     </fieldset>
                 </form>
-
                 <form class="form-horizontal" id="recentTransactions" style="display: none;">
+                    <ul class="breadcrumb" style="margin-bottom: 25px; padding-left : 0px;
+                    background-color: white;">
+                        <span style="margin-right:1em;">Customers  Journey:</span>
+                        <li><a href="javascript:void(0)">Login</a></li>
+                        <li><a href="javascript:void(0)">Details</a></li>
+                        <li><a href="javascript:void(0)">Payments</a></li>
+                        <li><a href="javascript:void(0)">Send Payment</a></li>
+                        <li class="active">Called Support</li>
+                        <div class="arrow_box">
+                            <div class="well bs-component">
+                                <form class="form-horizontal" id="accountInfo">
+                                    <fieldset>
+
+                                        <legend>Last Session</legend>
+
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-lg-2 control-label">Name</label>
+                                            <div class="col-lg-10">
+                                                <label class="form-control" id="accountNumber" placeholder="Name"><span class="material-input">Mary Black</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-lg-2 control-label">Acc. Number</label>
+                                            <div class="col-lg-10">
+                                                <label type="text" class="form-control" id="accountNumber">1234567</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-lg-2 control-label">Sort Code</label>
+                                            <div class="col-lg-10">
+                                                <label type="text" class="form-control" id="accountNumber">12-43-13</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-lg-2 control-label">Amount</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">£</span>
+                                                <label type="number" class="form-control">50.00</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </ul>
+                <!-- <form class="form-horizontal" id="payments" style="display: none;">
+                  <fieldset>
+                    <legend>Payments</legend>
+                  </fieldset>
+                </form> -->
+                <form class="form-horizontal" id="transactions" style="display: none;">
                   <fieldset>
                       <legend>Recent Payees </legend>
                       @recentPayments()
@@ -246,13 +336,41 @@
         }).appendTo( "body" );
       });
     });
+
+    function callWaiting() {
+      document.getElementById("accountInfo" ).style.display = "none";
+      document.getElementById("recentTransactions").style.display = "none";
+      // document.getElementById("payments" ).style.display = "none";
+      $('#accountInfoTab').removeClass("active");
+      $('#transactionsTab').removeClass("active");
+      // $('#paymentsTab').removeClass("active");
+    }
     function showAccountInfo() {
         document.getElementById("accountInfo" ).style.display = "block";
         document.getElementById("recentTransactions" ).style.display = "none";
+        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("idle").style.display = "none";
+        $('#accountInfoTab').addClass("active");
+        $('#transactionsTab').removeClass("active");
+        // $('#paymentsTab').removeClass("active");
     }
-    function showRecentTransactions() {
+    function showTransactions() {
         document.getElementById("accountInfo" ).style.display = "none";
         document.getElementById("recentTransactions" ).style.display = "block";
+        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("idle").style.display = "none";
+        $('#accountInfoTab').removeClass("active");
+        $('#transactionsTab').addClass("active");
+        // $('#paymentsTab').removeClass("active");
     }
+    // function showPayments() {
+    //   document.getElementById("accountInfo" ).style.display = "none";
+    //   document.getElementById("transactions" ).style.display = "none";
+    //   document.getElementById("payments" ).style.display = "block";
+    //   document.getElementById("idle").style.display = "none";
+    //   $('#accountInfoTab').removeClass("active");
+    //   $('#transactionsTab').addClass("active");
+    //   $('#paymentsTab').removeClass("active");
+    // }
     </script>
 }
