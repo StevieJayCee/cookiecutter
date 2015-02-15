@@ -164,7 +164,7 @@
             conn.accept();
             showPayments();
 
-            $("#callAlert").html("Call answered");
+            $("#callAlert").html("Call answered - John Smith");
         }, 5000);
     });
     </script>
@@ -211,17 +211,17 @@
                     </fieldset>
                 </form>
                 <form class="form-horizontal" id="recentTransactions" style="display: none;">
-                    <ul class="breadcrumb" style="margin-bottom: 25px; padding-left : 0px;
-                    background-color: white;">
+                    </form>
+                <form class="form-horizontal" id="payments" style="display: none;">
+                    <ul class="breadcrumb" style="margin-bottom: 25px; padding-left : 0px;background-color: white;">
                         <span style="margin-right:1em;">Customers  Journey:</span>
-                        <li><a href="javascript:void(0)">Login</a></li>
-                        <li><a href="javascript:void(0)">Details</a></li>
-                        <li><a href="javascript:void(0)">Payments</a></li>
-                        <li><a href="javascript:void(0)">Send Payment</a></li>
+                        <li><a href="javascript:void(0)" style="color:#002A66">Login</a></li>
+                        <li><a href="javascript:void(0)" style="color:#002A66">Details</a></li>
+                        <li><a href="javascript:void(0)" style="color:#002A66">Payments</a></li>
+                        <li><a href="javascript:void(0)" style="color:#002A66">Send Payment</a></li>
                         <li class="active">Called Support</li>
                         <div class="arrow_box">
-                            <div class="well bs-component" style="box-shadow:0 1px 10px #002A66,0 1px 10px #002A66">
-                                <form class="form-horizontal" id="accountInfo">
+                            <div class="well bs-component" style="box-shadow:0 0px 10px #002A66,0 1px 10px #002A66">
                                     <fieldset>
 
                                         <legend>Current Session</legend>
@@ -252,11 +252,9 @@
                                             </div>
                                         </div>
                                     </fieldset>
-                                </form>
                             </div>
                         </div>
                     </ul>
-                <form class="form-horizontal" id="payments" style="display: none;">
                   <fieldset>
                       <legend>Recent Payees </legend>
                       @recentPayments()
@@ -269,12 +267,13 @@
             <div id="callAlert" class="alert alert-dismissable alert-success" style="position: fixed;
             bottom: 0px;
             width: 75%;
-            display:none;">
+            display:none;
+            margin-bottom: 0px;">
                 Incoming call
             </div>
         </div>
 
-        <div class="col-lg-3" style="width: 24%;">
+        <div class="col-lg-3" id="activityList" style="width: 24%; display:none;">
                 <div class="well bs-component">
                     <form class="form-horizontal">
                         <fieldset>
@@ -442,6 +441,7 @@
       document.getElementById("recentTransactions" ).style.display = "none";
       document.getElementById("payments" ).style.display = "block";
       document.getElementById("idle").style.display = "none";
+      document.getElementById("activityList" ).style.display = "block";
       $('#accountInfoTab').removeClass("active");
       $('#transactionsTab').removeClass("active");
       $('#paymentsTab').addClass("active");

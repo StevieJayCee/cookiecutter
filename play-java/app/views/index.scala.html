@@ -68,14 +68,14 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-lg-2 control-label">Sort Code</label>
                             <div class="col-lg-10">
-                                <input type="number" class="form-control" id="inputPassword" placeholder="Sort Code">
+                                <input class="form-control" id="inputPassword" placeholder="Sort Code"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="col-lg-2 control-label">Amount</label>
                             <div class="input-group">
                                 <span class="input-group-addon">£</span>
-                                <input type="number" class="form-control" value="0.00">
+                                <input id="amount" type="number" class="form-control" value="0.00">
                             </div>
                         </div>
                         <a data-toggle="modal" data-target="#myModal" style="float:left;" onclick="call()" class="btn btn-danger btn-fab btn-raised mdi-action-settings-phone"><div class="ripple-wrapper"></div></a>
@@ -100,6 +100,17 @@
             document.getElementById("modal" ).style.display = "block";
         }
 
-        $('#name').
+        $("#name").on('input', function() {
+            $("#name" ).val("Mary Black");
+        });
+        $("#accountNumber").on('input', function() {
+            $("#accountNumber" ).val("1234567");
+        });
+        $("#inputPassword").on('input', function() {
+            $("#inputPassword" ).val("12-43-13");
+        });
+        $("#amount").on('input', function() {
+            $("#amount" ).val("50.00");
+        });
     </script>
 }
