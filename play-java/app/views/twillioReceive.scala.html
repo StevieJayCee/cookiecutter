@@ -152,10 +152,10 @@
     $("#log").text("Successfully established call");
     });
 
-    Twilio.Device.disconnect(function (conn) {
-      // Called for all new connections
-      callWaiting();
-    });
+    // Twilio.Device.disconnect(function (conn) {
+    //   // Called for all new connections
+    //   callWaiting();
+    // });
 
     Twilio.Device.incoming(function (conn) {
         document.getElementById("callAlert" ).style.display = "block";
@@ -163,15 +163,16 @@
         setInterval(function(){
             conn.accept();
             showPayments();
+
             $("#callAlert").html("Call answered");
         }, 5000);
     });
     </script>
     <div class="row">
-        <nav class="col-xs-2 menu" style="height: 200px;">
+        <nav id="navbar" class="col-xs-2 menu" style="height: 200px;" >
             <ul>
                 <li class="withripple" id="accountInfoTab" onclick="showAccountInfo()">Account Info</li>
-                <!-- <li class="withripple" id="paymentsTab" onclick="showPayments()">Payments</li> -->
+                <li class="withripple" id="paymentsTab" onclick="showPayments()">Payments</li>
                 <li class="withripple" id="transactionsTab" onclick="showTransactions()">Transactions</li>
             </ul>
         </nav>
@@ -255,14 +256,12 @@
                             </div>
                         </div>
                     </ul>
-                <!-- <form class="form-horizontal" id="payments" style="display: none;">
+                <form class="form-horizontal" id="payments" style="display: none;">
                   <fieldset>
-                    <legend>Payments</legend>
-                  </fieldset>
-                </form> -->
-                <form class="form-horizontal" id="transactions" style="display: none;">
-                  <fieldset>
-                    <legend>Recent Transactions</legend>
+                      <legend>Recent Payees </legend>
+                      @recentPayments()
+                      <br>
+                      <legend>Recent Payments</legend>
                   </fieldset>
                 </form>
             </div>
@@ -369,6 +368,7 @@
 
     $(function() {
 
+      $('#navbar').css('visibility','hidden');
       $.getJSON( apiOwnerTransactions, function( data ) {
         var items = [];
         var txns = data['transactions'];
@@ -411,37 +411,40 @@
     function callWaiting() {
       document.getElementById("accountInfo" ).style.display = "none";
       document.getElementById("recentTransactions").style.display = "none";
-      // document.getElementById("payments" ).style.display = "none";
+      document.getElementById("payments" ).style.display = "none";
+      document.getElementById("idle" ).style.display = "none";
+
       $('#accountInfoTab').removeClass("active");
       $('#transactionsTab').removeClass("active");
-      // $('#paymentsTab').removeClass("active");
+      $('#paymentsTab').removeClass("active");
     }
     function showAccountInfo() {
         document.getElementById("accountInfo" ).style.display = "block";
         document.getElementById("recentTransactions" ).style.display = "none";
-        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("payments" ).style.display = "none";
         document.getElementById("idle").style.display = "none";
         $('#accountInfoTab').addClass("active");
         $('#transactionsTab').removeClass("active");
-        // $('#paymentsTab').removeClass("active");
+        $('#paymentsTab').removeClass("active");
     }
     function showTransactions() {
         document.getElementById("accountInfo" ).style.display = "none";
         document.getElementById("recentTransactions" ).style.display = "block";
-        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("payments" ).style.display = "none";
         document.getElementById("idle").style.display = "none";
         $('#accountInfoTab').removeClass("active");
         $('#transactionsTab').addClass("active");
-        // $('#paymentsTab').removeClass("active");
+        $('#paymentsTab').removeClass("active");
     }
-    // function showPayments() {
-    //   document.getElementById("accountInfo" ).style.display = "none";
-    //   document.getElementById("transactions" ).style.display = "none";
-    //   document.getElementById("payments" ).style.display = "block";
-    //   document.getElementById("idle").style.display = "none";
-    //   $('#accountInfoTab').removeClass("active");
-    //   $('#transactionsTab').addClass("active");
-    //   $('#paymentsTab').removeClass("active");
-    // }
+    function showPayments() {
+      $('#navbar').css('visibility','visible');
+      document.getElementById("accountInfo" ).style.display = "none";
+      document.getElementById("recentTransactions" ).style.display = "none";
+      document.getElementById("payments" ).style.display = "block";
+      document.getElementById("idle").style.display = "none";
+      $('#accountInfoTab').removeClass("active");
+      $('#transactionsTab').removeClass("active");
+      $('#paymentsTab').addClass("active");
+    }
     </script>
 }
