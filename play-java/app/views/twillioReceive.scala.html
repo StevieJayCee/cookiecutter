@@ -165,14 +165,20 @@
     <div class="row">
         <nav class="col-xs-2 menu" style="height: 200px;">
             <ul>
-                <li class="withripple active" onclick="showAccountInfo()">Account Info</li>
-                <li class="withripple" onclick="showRecentTransactions()">Recent Transactions</li>
-                <li class="withripple" data-target="#material-colors">Recent Activity</li>
+                <li class="withripple" id="accountInfoTab" onclick="showAccountInfo()">Account Info</li>
+                <!-- <li class="withripple" id="paymentsTab" onclick="showPayments()">Payments</li> -->
+                <li class="withripple" id="transactionsTab" onclick="showTransactions()">Transactions</li>
             </ul>
         </nav>
         <div class="col-lg-9">
             <div class="well bs-component">
-                <form class="form-horizontal" id="accountInfo">
+
+              <form class="form-horizontal" id="idle">
+                <fieldset>
+                  <h1>Waiting on a call.....</h1>
+                </fieldset>
+              </form>
+                <form class="form-horizontal" id="accountInfo" style="display: none;">
                     <fieldset>
 
                         <legend>Account Info</legend>
@@ -244,6 +250,12 @@
                             </div>
                         </div>
                     </ul>
+                <!-- <form class="form-horizontal" id="payments" style="display: none;">
+                  <fieldset>
+                    <legend>Payments</legend>
+                  </fieldset>
+                </form> -->
+                <form class="form-horizontal" id="transactions" style="display: none;">
                   <fieldset>
                     <legend>Recent Transactions</legend>
                   </fieldset>
@@ -316,13 +328,41 @@
         }).appendTo( "body" );
       });
     });
+
+    function callWaiting() {
+      document.getElementById("accountInfo" ).style.display = "none";
+      document.getElementById("recentTransactions").style.display = "none";
+      // document.getElementById("payments" ).style.display = "none";
+      $('#accountInfoTab').removeClass("active");
+      $('#transactionsTab').removeClass("active");
+      // $('#paymentsTab').removeClass("active");
+    }
     function showAccountInfo() {
         document.getElementById("accountInfo" ).style.display = "block";
         document.getElementById("recentTransactions" ).style.display = "none";
+        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("idle").style.display = "none";
+        $('#accountInfoTab').addClass("active");
+        $('#transactionsTab').removeClass("active");
+        // $('#paymentsTab').removeClass("active");
     }
-    function showRecentTransactions() {
+    function showTransactions() {
         document.getElementById("accountInfo" ).style.display = "none";
         document.getElementById("recentTransactions" ).style.display = "block";
+        // document.getElementById("payments" ).style.display = "none";
+        document.getElementById("idle").style.display = "none";
+        $('#accountInfoTab').removeClass("active");
+        $('#transactionsTab').addClass("active");
+        // $('#paymentsTab').removeClass("active");
     }
+    // function showPayments() {
+    //   document.getElementById("accountInfo" ).style.display = "none";
+    //   document.getElementById("transactions" ).style.display = "none";
+    //   document.getElementById("payments" ).style.display = "block";
+    //   document.getElementById("idle").style.display = "none";
+    //   $('#accountInfoTab').removeClass("active");
+    //   $('#transactionsTab').addClass("active");
+    //   $('#paymentsTab').removeClass("active");
+    // }
     </script>
 }
