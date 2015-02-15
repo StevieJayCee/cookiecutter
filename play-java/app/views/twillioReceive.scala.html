@@ -175,7 +175,7 @@
                 <li class="withripple" id="transactionsTab" onclick="showTransactions()">Transactions</li>
             </ul>
         </nav>
-        <div class="col-lg-9">
+        <div class="col-lg-7">
             <div class="well bs-component">
 
               <form class="form-horizontal" id="idle">
@@ -219,11 +219,11 @@
                         <li><a href="javascript:void(0)">Send Payment</a></li>
                         <li class="active">Called Support</li>
                         <div class="arrow_box">
-                            <div class="well bs-component">
+                            <div class="well bs-component" style="box-shadow:0 1px 10px #002A66,0 1px 10px #002A66">
                                 <form class="form-horizontal" id="accountInfo">
                                     <fieldset>
 
-                                        <legend>Last Session</legend>
+                                        <legend>Current Session</legend>
 
                                         <div class="form-group">
                                             <label for="inputEmail" class="col-lg-2 control-label">Name</label>
@@ -275,7 +275,81 @@
             </div>
         </div>
 
-        <div class="col-lg-3">&nbsp;</div>
+        <div class="col-lg-3" style="width: 24%;">
+                <div class="well bs-component">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend style="margin-bottom:0px;">Customer Activity Log</legend>
+                        </fieldset>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span> Customer Logged In
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span> Customer clicked details button
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span> Navigated to details
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span> Customer clicked payments button
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span> Navigated to transfer screen
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span>"Mary Black" entered in 'Name' field
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span>"1234567" entered in 'Acc. Num' field
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span>"12-43-13" entered in 'Sort Code' field
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span>"50.00" entered in 'Amount' field
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked="true"><span class="ripple"></span><span class="check"></span>Customer clicked 'Make Transfer'.
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"><span class="ripple"></span><span class="check"  style="color:red;"></span>Submit failed. Invalid sort code.
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"><span class="ripple"></span><span class="check"  style="color:red;"></span>Submit failed. Invalid sort code.
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" checked><span class="ripple"></span><span class="check"></span>Customer called support.
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-10">&nbsp;</div>
