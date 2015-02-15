@@ -259,7 +259,6 @@
                       <legend>Recent Payees </legend>
                       @recentPayments()
                       <br>
-                      <legend>Recent Payments</legend>
                   </fieldset>
                 </form>
             </div>
@@ -269,7 +268,7 @@
             width: 75%;
             display:none;
             margin-bottom: 0px;">
-                Incoming call
+                Incoming call from John Smith
             </div>
         </div>
 
@@ -373,7 +372,7 @@
         var txns = data['transactions'];
         var account = txns[0]['this_account'];
 
-        $('#username').text(account['holders'][0]['name']);
+        $('#username').text('John Smith');
         $('#accountType').text(account['kind']);
         $('#accountNumber').text(account['number']);
 
