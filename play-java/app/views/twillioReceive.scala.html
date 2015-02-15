@@ -152,10 +152,10 @@
     $("#log").text("Successfully established call");
     });
 
-    Twilio.Device.disconnect(function (conn) {
-      // Called for all new connections
-      callWaiting();
-    });
+    // Twilio.Device.disconnect(function (conn) {
+    //   // Called for all new connections
+    //   callWaiting();
+    // });
 
     Twilio.Device.incoming(function (conn) {
         document.getElementById("callAlert" ).style.display = "block";
@@ -338,6 +338,8 @@
       document.getElementById("accountInfo" ).style.display = "none";
       document.getElementById("recentTransactions").style.display = "none";
       document.getElementById("payments" ).style.display = "none";
+      document.getElementById("idle" ).style.display = "none";
+
       $('#accountInfoTab').removeClass("active");
       $('#transactionsTab').removeClass("active");
       $('#paymentsTab').removeClass("active");
@@ -363,12 +365,12 @@
     function showPayments() {
       $('#navbar').css('visibility','visible');
       document.getElementById("accountInfo" ).style.display = "none";
-      document.getElementById("transactions" ).style.display = "none";
+      document.getElementById("recentTransactions" ).style.display = "none";
       document.getElementById("payments" ).style.display = "block";
       document.getElementById("idle").style.display = "none";
       $('#accountInfoTab').removeClass("active");
-      $('#transactionsTab').addClass("active");
-      $('#paymentsTab').removeClass("active");
+      $('#transactionsTab').removeClass("active");
+      $('#paymentsTab').addClass("active");
     }
     </script>
 }
