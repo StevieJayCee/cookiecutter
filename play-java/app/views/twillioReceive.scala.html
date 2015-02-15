@@ -163,12 +163,13 @@
         setInterval(function(){
             conn.accept();
             showPayments();
+
             $("#callAlert").html("Call answered");
         }, 5000);
     });
     </script>
     <div class="row">
-        <nav class="col-xs-2 menu" style="height: 200px;">
+        <nav id="navbar" class="col-xs-2 menu" style="height: 200px;" >
             <ul>
                 <li class="withripple" id="accountInfoTab" onclick="showAccountInfo()">Account Info</li>
                 <!-- <li class="withripple" id="paymentsTab" onclick="showPayments()">Payments</li> -->
@@ -295,6 +296,7 @@
 
     $(function() {
 
+      $('#navbar').css('visibility','hidden');
       $.getJSON( apiOwnerTransactions, function( data ) {
         var items = [];
         var txns = data['transactions'];
@@ -361,6 +363,7 @@
         // $('#paymentsTab').removeClass("active");
     }
     // function showPayments() {
+    //   $('#navbar').css('visibility','visible');
     //   document.getElementById("accountInfo" ).style.display = "none";
     //   document.getElementById("transactions" ).style.display = "none";
     //   document.getElementById("payments" ).style.display = "block";
