@@ -123,12 +123,17 @@
     $("#log").text("Successfully established call");
     });
 
+    Twilio.Device.disconnect(function (conn) {
+      // Called for all new connections
+      callWaiting();
+    });
 
     Twilio.Device.incoming(function (conn) {
         document.getElementById("callAlert" ).style.display = "block";
         $("#callAlert").html("Incoming call");
         setInterval(function(){
             conn.accept();
+            showPayments();
             $("#callAlert").html("Call answered");
         }, 5000);
     });
